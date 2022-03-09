@@ -2,13 +2,13 @@
 
 session_start();
 
+if (isset($_SESSION['x'])) {
+    $x = $_SESSION['x'];
+}
+
 if(isset($_POST['other'])){
     $x = rand(1, 100);
     $_SESSION['x'] = $x;
-}
-
-if (isset($_SESSION['x'])) {
-    $x = $_SESSION['x'];
 }
 
 //echo $x;
@@ -27,7 +27,7 @@ if($num < 0 || $num > 100){
     $_SESSION['big'] = 'Упсс! Ваше число слишком большое.';
 } else {
     if($num == $x){
-        $_SESSION['true'] = 'Поздравляем, Вы выйграли. Это число: '.$x.'. Кликните "Другое число", чтобы сыграть еще раз.';
+        $_SESSION['true'] = 'Поздравляем, Вы выйграли. Это число: '.$x.'. Кликните "Загадать число", чтобы сыграть еще раз.';
     }
 }    
 
@@ -44,22 +44,28 @@ if($num < 0 || $num > 100){
     </head>
     <body>
         <div class="container">
-            <h1>Угадай число</h1>
-            <p>Привет, мы загадали число в диапазоне от 1 до 100. Попробуй угадай)))</p>
-            <form action="index.php" method="POST">
-                <input type="number" name="num" placeholder="Введите число">
-                <input type="submit" name="submit" value="Проверить">
-                <p><input type="submit" name="other" value="Другое число"></p>
-            </form>
-            <hr>
-                <?php
-                echo $_SESSION['false']; unset($_SESSION['false']);
-                echo $_SESSION['error']; unset($_SESSION['error']);
-                echo $_SESSION['small']; unset($_SESSION['small']);
-                echo $_SESSION['big']; unset($_SESSION['big']);
-                echo $_SESSION['true']; unset($_SESSION['true']);           
-                ?>
-            <hr>
+            <div class="box">
+                <h1>Угадай число</h1>
+                <p>Привет, мы загадали число в диапазоне от 1 до 100. Попробуй угадай)))</p>
+            </div>
+            <div class="box">
+                <form action="index.php" method="POST">
+                    <input type="number" name="num" placeholder="Введите число">
+                    <input type="submit" name="submit" value="Проверить">
+                    <p><input type="submit" name="other" value="Загадать число"></p>
+                </form>
+            </div>
+            <div class="box">
+                <hr>
+                    <?php
+                    echo $_SESSION['false']; unset($_SESSION['false']);
+                    echo $_SESSION['error']; unset($_SESSION['error']);
+                    echo $_SESSION['small']; unset($_SESSION['small']);
+                    echo $_SESSION['big']; unset($_SESSION['big']);
+                    echo $_SESSION['true']; unset($_SESSION['true']);           
+                    ?>
+                <hr>
+            </div>
         </div>
     </body>
 </html>
