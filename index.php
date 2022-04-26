@@ -4,6 +4,9 @@ session_start();
 
 if (isset($_SESSION['x'])) {
     $x = $_SESSION['x'];
+} else {
+    $x = rand(1, 100);
+    $_SESSION['x'] = $x;
 }
 
 if(isset($_POST['other'])){
@@ -11,22 +14,20 @@ if(isset($_POST['other'])){
     $_SESSION['x'] = $x;
 }
 
-//echo $x;
-
-if($_POST['num'] == false){
+if(!isset($_POST['num'])){
     $_SESSION['false'] = 'Введите число.';
 } else { 
     $num = $_POST['num'];
 }
 
-if($num < 0 || $num > 100){
+if(isset($num) && $num < 1 || $num > 100){
     $_SESSION['error'] = 'Мы просили Вас выбрать число от 1 до 100. Попробуйте еще раз.';
-} elseif($num == true && $num < $x){
+} elseif(isset($num) && $num < $x){
     $_SESSION['small'] = 'Ой, Ваше число слишком маленькое.';
-} elseif($num > $x){
+} elseif(isset($num) && $num > $x){
     $_SESSION['big'] = 'Упсс! Ваше число слишком большое.';
 } else {
-    if($num == $x){
+    if(isset($num) && $num == $x){
         $_SESSION['true'] = 'Поздравляем, Вы выйграли. Это число: '.$x.'. Кликните "Загадать число", чтобы сыграть еще раз.';
     }
 }    
@@ -52,6 +53,8 @@ if($num < 0 || $num > 100){
                 <form action="index.php" method="POST">
                     <input type="number" name="num" placeholder="Введите число">
                     <input type="submit" name="submit" value="Проверить">
+                </form>
+                <form action="index.php" method="POST">
                     <p><input type="submit" name="other" value="Загадать число"></p>
                 </form>
             </div>
